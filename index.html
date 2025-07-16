@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gadget Slider</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .slider-container {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .card-track {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .card {
+      min-width: 200px;
+      margin: 0 10px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .card span {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .slider-buttons {
+      margin-top: 20px;
+    }
+
+    .slider-buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 0 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .slider-buttons button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gadgets</h1>
+
+  <div class="slider-container">
+    <div class="card-track" id="cardTrack">
+      <div class="card">
+        <img src="https://via.placeholder.com/80?text=📱" alt="Mobile">
+        <span>Mobile</span>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80?text=💻" alt="Laptop">
+        <span>Laptop</span>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80?text=📺" alt="TV">
+        <span>TV</span>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80?text=📟" alt="Tablet">
+        <span>Tablet</span>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/80?text=⌚" alt="Smartwatch">
+        <span>Smartwatch</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-buttons">
+    <button onclick="moveSlider(-1)">⬅ Prev</button>
+    <button onclick="moveSlider(1)">Next ➡</button>
+  </div>
+
+  <script>
+    const cardTrack = document.getElementById('cardTrack');
+    const cardWidth = 220; // card width + margin
+    let currentScroll = 0;
+
+    function moveSlider(direction) {
+      currentScroll += direction * cardWidth;
+      const maxScroll = (cardTrack.children.length * cardWidth) - 660;
+
+      // Clamp scroll position
+      if (currentScroll < 0) currentScroll = 0;
+      if (currentScroll > maxScroll) currentScroll = maxScroll;
+
+      cardTrack.style.transform = `translateX(-${currentScroll}px)`;
+    }
+  </script>
+
+</body>
+</html>
