@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Circular Gadget Shop</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3efe3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .shop-button {
+      position: absolute;
+      z-index: 2;
+      font-size: 24px;
+      padding: 16px 32px;
+      background: #4a3f2d;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+
+    .shop-button.hide {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.9);
+    }
+
+    .circle-container {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      display: none;
+      animation: scaleIn 1s ease forwards;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .circle-item {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .circle-item img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 8px;
+    }
+
+    .circle-item span {
+      font-size: 14px;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      .circle-container {
+        width: 300px;
+        height: 300px;
+      }
+
+      .circle-item {
+        width: 70px;
+        height: 70px;
+      }
+
+      .circle-item img {
+        width: 35px;
+        height: 35px;
+      }
+
+      .circle-item span {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="shop-button" id="shopBtn">Click Here to Shop</button>
+
+  <div class="circle-container" id="circleContainer"></div>
+
+  <script>
+    const products = [
+      { img: "https://via.placeholder.com/50x50?text=📱", label: "Mobile" },
+      { img: "https://via.placeholder.com/50x50?text=💻", label: "Laptop" },
+      { img: "https://via.placeholder.com/50x50?text=📺", label: "TV" },
+      { img: "https://via.placeholder.com/50x50?text=⌚", label: "Watch" },
+      { img: "https://via.placeholder.com/50x50?text=📟", label: "Tablet" },
+      { img: "https://via.placeholder.com/50x50?text=🎧", label: "Headphones" },
+    ];
+
+    const shopBtn = document.getElementById('shopBtn');
+    const circleContainer = document.getElementById('circleContainer');
+
+    shopBtn.addEventListener('click', () => {
+      shopBtn.classList.add('hide');
+      setTimeout(() => {
+        circleContainer.style.display = 'block';
+        createCircleItems();
+      }, 500);
+    });
+
+    function createCircleItems() {
+      const radius = 200; // adjust for spacing
+      const centerX = 250, centerY = 250; // center of the circle
+
+      if (window.innerWidth < 600) {
+        radius = 120;
+        centerX = 150;
+        centerY = 150;
+      }
+
+      const angleStep = 360 / products.length;
+
+      products.forEach((item, index) => {
+        const angle = angleStep * index * (Math.PI / 180);
+        const x = centerX + radius * Math.cos(angle) - 50;
+        const y = centerY + radius * Math.sin(angle) - 50;
+
+        const el = document.createElement('div');
+        el.classList.add('circle-item');
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+        el.innerHTML = `
+          <img src="${item.img}" alt="">
+          <span>${item.label}</span>
+        `;
+        circleContainer.appendChild(el);
+      });
+    }
+  </script>
+
+</body>
+</html>
