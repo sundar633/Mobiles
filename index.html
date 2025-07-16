@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animated Square Cards</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    .card.visible {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+    }
+
+    .card .text {
+      padding: 15px;
+      font-size: 1rem;
+      text-align: center;
+      color: #333;
+      font-weight: 600;
+    }
+
+    /* Optional: hover effect */
+    .card:hover {
+      transform: scale(1.03);
+      transition: transform 0.3s ease;
+    }
+
+    /* Initial intro animation (1 card) */
+    .intro-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.3) rotateY(180deg);
+      width: 300px;
+      height: 200px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      animation: introFlip 1.5s ease forwards;
+      z-index: 10;
+    }
+
+    @keyframes introFlip {
+      0% {
+        transform: translate(-50%, -50%) scale(0.3) rotateY(180deg);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1) rotateY(0deg);
+        opacity: 1;
+      }
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Intro Card -->
+  <div class="intro-card" id="introCard">Loading Cards...</div>
+
+  <!-- Card Grid -->
+  <div class="grid hide" id="cardGrid">
+    <div class="card"><img src="https://placekitten.com/300/200"><div class="text">Card 1</div></div>
+    <div class="card"><img src="https://placekitten.com/301/200"><div class="text">Card 2</div></div>
+    <div class="card"><img src="https://placekitten.com/302/200"><div class="text">Card 3</div></div>
+    <div class="card"><img src="https://placekitten.com/303/200"><div class="text">Card 4</div></div>
+    <div class="card"><img src="https://placekitten.com/304/200"><div class="text">Card 5</div></div>
+    <div class="card"><img src="https://placekitten.com/305/200"><div class="text">Card 6</div></div>
+  </div>
+
+  <script>
+    // Hide intro and show cards after animation
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('introCard').classList.add('hide');
+        document.getElementById('cardGrid').classList.remove('hide');
+        observeCards(); // Start animation observer
+      }, 1600);
+    };
+
+    // Animate cards on scroll into view
+    function observeCards() {
+      const cards = document.querySelectorAll('.card');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.3
+      });
+
+      cards.forEach(card => {
+        observer.observe(card);
+      });
+    }
+  </script>
+
+</body>
+</html>
