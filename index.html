@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animated Cards Grid</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      width: 90%;
+      max-width: 1200px;
+      perspective: 1000px;
+      opacity: 0;
+      animation: fadeInContainer 1s ease forwards;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes fadeInContainer {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transform: rotateY(90deg);
+      animation: flipIn 0.6s ease forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 1.6s; }
+    .card:nth-child(2) { animation-delay: 1.8s; }
+    .card:nth-child(3) { animation-delay: 2s; }
+    .card:nth-child(4) { animation-delay: 2.2s; }
+    .card:nth-child(5) { animation-delay: 2.4s; }
+    .card:nth-child(6) { animation-delay: 2.6s; }
+
+    @keyframes flipIn {
+      0% {
+        transform: rotateY(90deg);
+        opacity: 0;
+      }
+      100% {
+        transform: rotateY(0deg);
+        opacity: 1;
+      }
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-text {
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    /* Initial single card animation */
+    .intro-card {
+      position: absolute;
+      width: 300px;
+      height: 200px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      color: #333;
+      animation: introFlip 1.5s ease forwards;
+    }
+
+    @keyframes introFlip {
+      0% {
+        transform: scale(0.2) rotateY(180deg);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1) rotateY(0deg);
+        opacity: 1;
+      }
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Intro animation card -->
+  <div class="intro-card" id="introCard">
+    Loading Cards...
+  </div>
+
+  <!-- Main Cards Grid -->
+  <div class="container hide" id="cardContainer">
+    <div class="card">
+      <img src="https://placekitten.com/300/200" alt="Image 1">
+      <div class="card-text">Cute Cat 1</div>
+    </div>
+    <div class="card">
+      <img src="https://placekitten.com/301/200" alt="Image 2">
+      <div class="card-text">Cute Cat 2</div>
+    </div>
+    <div class="card">
+      <img src="https://placekitten.com/302/200" alt="Image 3">
+      <div class="card-text">Cute Cat 3</div>
+    </div>
+    <div class="card">
+      <img src="https://placekitten.com/303/200" alt="Image 4">
+      <div class="card-text">Cute Cat 4</div>
+    </div>
+    <div class="card">
+      <img src="https://placekitten.com/304/200" alt="Image 5">
+      <div class="card-text">Cute Cat 5</div>
+    </div>
+    <div class="card">
+      <img src="https://placekitten.com/305/200" alt="Image 6">
+      <div class="card-text">Cute Cat 6</div>
+    </div>
+  </div>
+
+  <script>
+    // Hide the intro card and show container after delay
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('introCard').classList.add('hide');
+        document.getElementById('cardContainer').classList.remove('hide');
+      }, 1500); // Matches intro animation duration
+    };
+  </script>
+
+</body>
+</html>
